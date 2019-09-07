@@ -1,2 +1,2 @@
 # AppEngine
-The cross-platform library for making any our project application's easier
+The cross-platform library for making any your project application's easier with logging features
