@@ -10,7 +10,7 @@ namespace AppEngine
     /// The standard log factory for AppEngine
     /// Logs details to the Debug by default
     /// </summary>
-    public class BaseLogFactory : ILogFactory
+    public class BaseLogEngine : ILogEngine
     {
 
         #region Properties
@@ -30,10 +30,10 @@ namespace AppEngine
         #region Constructor
 
         /// <summary>
-        /// Default constructor
+        /// Default constructor.
         /// </summary>
         /// <param name="loggers">The loggers to add to the factory, on top of the stock loggers already included</param>
-        public BaseLogFactory(ILogger[] loggers = null)
+        public BaseLogEngine(ILogger[] loggers = null)
         {
             AddLogger(new DebugLogger());
 
@@ -43,8 +43,9 @@ namespace AppEngine
         }
 
         #endregion
+        
 
-        public event Action<(string message, LogLevel level)> NewLog;
+        #region Methods
 
         /// <summary>
         /// Adds the specific logger to this factory.
@@ -81,20 +82,20 @@ namespace AppEngine
         /// <param name="memberName">The method/function this message was logged from</param>
         /// <param name="filePath">The file of location that this message was logged from</param>
         /// <param name="number">The line of code in this message was logged from</param>
-        public void Log(string message, LogLevel level = LogLevel.Debug, 
-            [CallerMemberName] string memberName = "", 
-            [CallerFilePath] string filePath = "", 
+        public void Log(string message, LogLevel level = LogLevel.Debug,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string filePath = "",
             [CallerLineNumber] int LineNumber = 0)
         {
             message = $"Message: [{message}] - " +
+                      $"File Name: [{Path.GetFileName(memberName)}{Path.GetExtension(memberName)}] - " +
                       $"Location: [{Path.GetFullPath(filePath)}] - " +
-                      $"File Name: [{Path.GetFileName(memberName)}] - " +
                       $"Line: [{LineNumber}]";
 
             loggers.ForEach(loggers => loggers.Log(message, level));
 
-            NewLog.Invoke((message, level));
+        } 
 
-        }
+        #endregion
     }
 }

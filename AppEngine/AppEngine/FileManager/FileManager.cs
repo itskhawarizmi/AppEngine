@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace AppEngine
@@ -18,7 +20,14 @@ namespace AppEngine
         /// </summary>
         /// <param name="filePath">The path of file to normalize</param>
         /// <returns></returns>
-        public string NormalizePath(string filePath) => filePath?.Replace('/', '\\');
+        public string NormalizePath(string filePath)
+        {
+            if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return filePath?.Replace('/', '\\').Trim();
+            else
+                return filePath?.Replace('\\', '/').Trim();
+            
+        }
 
 
         /// <summary>
@@ -27,6 +36,12 @@ namespace AppEngine
         /// <param name="filePath">The path of file</param>
         /// <returns></returns>
         public string ResolvePath(string filePath) => Path.GetFullPath(filePath);
+
+        /// <summary>
+        /// Gets instance from <see cref="ILogger"/> to 
+        /// Handles the logged message.
+        /// </summary>
+        private ILogger Logger { get; set; } = new DebugLogger();
 
         /// <summary>
         /// Reads some text from file.
@@ -41,22 +56,26 @@ namespace AppEngine
         {
             var texts = default(string);
 
-            filePath = NormalizePath(filePath);
-
-            filePath = ResolvePath(filePath);
-
             try
             {
-                await Task.Run(() =>
-                {
-                    using (var streamReader = (TextReader)new StreamReader(File.Open($"{filePath}/{fileName}{FileExtensions.FileTypeExtensions(fileFormat)}", FileMode.Open)))
-                    {
-                        while (streamReader.Peek() > -1)
-                        {
-                            texts = streamReader.ReadLine();
-                        }
-                    }
 
+                filePath = NormalizePath(filePath);
+
+                filePath = ResolvePath(filePath);
+
+                await AsyncEngine.AwaitAsync(nameof(FileManager)+filePath, async () =>
+                {
+                    await Task.Run(() =>
+                    {
+                        using (var streamReader = (TextReader)new StreamReader(File.Open($"{filePath}/{fileName}{FileExtensions.FileTypeExtensions(fileFormat)}", FileMode.Open)))
+                        {
+                            while (streamReader.Peek() > -1)
+                            {
+                                texts = streamReader.ReadLine();
+                            }
+                        }
+
+                    });
                 });
 
 
@@ -64,6 +83,8 @@ namespace AppEngine
             }
             catch(Exception Ex)
             {
+                Logger.Log($"{Ex.Message}", LogLevel.Error);
+
 
             }
 
@@ -82,32 +103,31 @@ namespace AppEngine
         /// <param name="filePath">The location of file to write to</param>
         /// <param name="isAppend">If value is true, indicating add text to the end of file</param>
         /// <returns></returns>
-        public async Task WriteTextToFileAsync(string fileName, FileTypeExtension fileFormat, string filePath, string text, bool isAppend)
+        public async Task WriteTextToFileAsync(string fileName, FileTypeExtension fileFormat, string filePath, string text, bool isAppend = false)
         {
-            FileExtensions.FileTypeExtensions(fileFormat);
-
-            filePath = NormalizePath(filePath);
-
-            filePath = ResolvePath(filePath);
-
             try
             {
+
+                filePath = NormalizePath(filePath);
+
+                filePath = ResolvePath(filePath);
+
                 await AsyncEngine.AwaitAsync(nameof(FileManager) + filePath, async () =>
                 {
                     await Task.Run(() =>
                     {
-                        using (var streamWriter = (TextWriter)new StreamWriter(File.Open($"{filePath}{fileName}{FileExtensions.FileTypeExtensions(fileFormat)}", isAppend ? FileMode.Append : FileMode.Create)))
+                        using (var streamWriter = (TextWriter)new StreamWriter(File.Open($"{filePath}/{fileName}{FileExtensions.FileTypeExtensions(fileFormat)}", isAppend ? FileMode.Append : FileMode.Create)))
                         {
-                            streamWriter.WriteLineAsync(text);
+                            streamWriter.Write(text);
                         }
-
+                        
                     });
 
                 });
             }
             catch (Exception Ex)
             {
-
+                Logger.Log($"{Ex.Message}", LogLevel.Error);
             }
             
         }

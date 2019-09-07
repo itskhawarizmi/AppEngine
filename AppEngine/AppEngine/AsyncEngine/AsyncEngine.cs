@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,6 +26,7 @@ namespace AppEngine
 
         #endregion
 
+
         /// <summary>
         /// Awaits for any outstanding tasks to complete that are accessing the same key then runs the given task
         /// </summary>
@@ -43,7 +45,7 @@ namespace AppEngine
             }
             catch (Exception Ex)
             {
-                // TODO ADD LOG
+               Log($"{Ex.Message}", LogLevel.Critical);
             }
             finally
             {
@@ -60,7 +62,7 @@ namespace AppEngine
             }
             catch (Exception Ex)
             {
-                // TODO ADD LOG
+               Log($"{Ex.Message}", LogLevel.Critical);
             }
             finally
             {
@@ -85,7 +87,7 @@ namespace AppEngine
             }
             catch(Exception Ex)
             {
-                // TODO ADD LOG
+                Log($"{Ex.Message}", LogLevel.Critical);
             }
             finally
             {
@@ -105,5 +107,17 @@ namespace AppEngine
                 semaphore.Release();
             }
         }
+
+        /// <summary>
+        /// Handles the logged message.
+        /// </summary>
+        /// <param name="message">The message to log</param>
+        /// <param name="level">The level of current log</param>
+
+        private static void Log(string message, LogLevel level)
+        {
+            Debug.WriteLine(message, level);
+        }
     }
+
 }

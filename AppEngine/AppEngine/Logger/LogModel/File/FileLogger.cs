@@ -65,9 +65,9 @@ namespace AppEngine
         {
             var currentTime = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
 
-            var timeLogger = LogTime ? $"Date: {currentTime}" : "";
+            var timeLogger = LogTime ? $"Date: [{currentTime}]" : "";
 
-            File.WriteTextToFileAsync($"{FileName}", FileFormat, $"{FilePath}",$"{message} - {timeLogger}{Environment.NewLine}", true);
+            File.WriteTextToFileAsync(FileName, FileFormat, FilePath, $"{message} - {timeLogger}{Environment.NewLine}", isAppend:true);
         }
     }
 }

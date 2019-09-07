@@ -6,7 +6,7 @@ namespace AppEngine
     /// <summary>
     /// The loggers to log messages for the developer.
     /// </summary>
-    public interface ILogFactory
+    public interface ILogEngine
     {
         /// <summary>
         /// Logs the specific message to all logger in this factory.
@@ -21,11 +21,7 @@ namespace AppEngine
                 [CallerFilePath]string filePath = "", 
                 [CallerLineNumber]int LineNumber = 0
         );
-
-        /// <summary>
-        /// Fires whenever a new log arrives
-        /// </summary>
-        event Action<(string message, LogLevel level)> NewLog;
+        
 
         /// <summary>
         /// Adds the specific logger to this factory.
