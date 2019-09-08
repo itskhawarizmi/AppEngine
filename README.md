@@ -21,10 +21,10 @@ Log output is:
 
 ### Features:
 
-**1. Powerfull.** AppEngine includes many advanced features.
-**2. Fast.** AppEngine is fast, that is takes advantage of lambda expression build system. This can result in a dramatic (8-50x) improvement in performance in many situations.
-**3. Maintainable.** AppEngine is designed around a component-based architecture, with customization and evolution in mind. Many facets of the system can be augmented or modified to fit the requirements of each project.
-**4. Easy to Use.** AppEngine is easy to use with simple implementation but powerfull.
+**1. Powerfull.** AppEngine includes many advanced features.<br />
+**2. Fast.** AppEngine is fast, that is takes advantage of lambda expression build system. This can result in a dramatic (8-50x) improvement in performance in many situations.<br />
+**3. Maintainable.** AppEngine is designed around a component-based architecture, with customization and evolution in mind. Many facets of the system can be augmented or modified to fit the requirements of each project.<br />
+**4. Easy to Use.** AppEngine is easy to use with simple implementation but powerfull.<br />
 
 
 ### License:
