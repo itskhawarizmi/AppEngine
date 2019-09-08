@@ -28,7 +28,7 @@ Log output is:
 
 
 ### License:
-Ninject is intended to be used in both open-source and commercial environments. To allow its use in as many situations as possible, Ninject is one-licensed. You may choose to use Ninject under either the MIT License.
+AppEngine is intended to be used in both open-source and commercial environments. To allow its use in as many situations as possible, AppEngine is one-licensed. You may choose to use AppEngine under either the MIT License.
 
 Refer to [LICENSE.txt](https://github.com/itskhawarizmi/AppEngine/blob/master/LICENSE) for detailed information.
 
