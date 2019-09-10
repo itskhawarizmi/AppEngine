@@ -2,10 +2,24 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Muhammad Hari</Authors>
+    <Company>CodeWizard</Company>
+    <PackageProjectUrl>https://github.com/itskhawarizmi/AppEngine</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/itskhawarizmi/AppEngine/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Copyright (c) 2019 Al-Khawarizmi</Copyright>
+    <RepositoryUrl>https://github.com/itskhawarizmi/AppEngine</RepositoryUrl>
+    <RepositoryType>Public</RepositoryType>
+    <PackageTags>Log, Logger, AppEngine, Engine, Itskhawarizmi, Hari,</PackageTags>
+    <PackageReleaseNotes>Hi! My name is Muhammad Hari, you can call me hari. I live in a rainy city, Indonesia I'm very excited making this project for help any developer to log his project with AppEngine. App Engine is MIT License you can re-develop it if you wanna some help from me or you have some plan to make any project and you need my hand to build it, just contact me. I'm so happy if I can help you.</PackageReleaseNotes>
+    <Description>AppEngine a cross-platform library and supports a logging API that works with a variety of built-in and third-party logging providers.</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <ApplicationIcon>AppEngineIcon.ico</ApplicationIcon>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Logger\LogModel\Console\" />
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
 
 </Project>

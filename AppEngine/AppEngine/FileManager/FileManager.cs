@@ -12,7 +12,7 @@ namespace AppEngine
     ///  Provides any methods for handle manipulation data 
     ///  like writes or reads text from files and so on.
     /// </summary>
-    public class FileManager : IFileManager
+    public class FileManager : IFileManager, IFileNormalizer
     {
         /// <summary>
         /// Normalizing a path based on the current operating systems like Windows,
@@ -52,9 +52,11 @@ namespace AppEngine
         /// <param name="isCreateNewAndSave">If value is true, indicating save file as new file</param>
         /// <returns></returns>
 
-        public async Task<string> ReadTextFromFileAsync(string fileName, FileTypeExtension fileFormat, string filePath, bool isCreateNewAndSave = true)
+        public async Task<List<string>> ReadTextFromFileAsync(string fileName, FileTypeExtension fileFormat, string filePath, bool isCreateNewAndSave = true)
         {
-            var texts = default(string);
+            var text = default(string);
+            var content = new List<string>();
+
 
             try
             {
@@ -71,7 +73,9 @@ namespace AppEngine
                         {
                             while (streamReader.Peek() > -1)
                             {
-                                texts = streamReader.ReadLine();
+                                text = streamReader.ReadLine();
+
+                                content = text.Split(new char[] { '\n' }).ToList();
                             }
                         }
 
@@ -88,7 +92,7 @@ namespace AppEngine
 
             }
 
-            return texts;
+            return content;
 
 
 

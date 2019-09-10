@@ -9,22 +9,6 @@ namespace AppEngine
     /// </summary>
     public interface IFileManager
     {
-        /// <summary>
-        /// Normalizing path of file based on the current operating systems
-        /// like windows, linux, and mac.
-        /// </summary>
-        /// <param name="filePath">The path of file to normalize</param>
-        /// <returns></returns>
-        string NormalizePath(string filePath);
-
-
-        /// <summary>
-        /// Resolve any relative element of the path to absolute path.
-        /// </summary>
-        /// <param name="filePath">The path of file</param>
-        /// <returns></returns>
-        string ResolvePath(string filePath);
-
 
         /// <summary>
         /// Writes some text to add to the file.
@@ -46,6 +30,6 @@ namespace AppEngine
         /// <param name="filePath">The location of file to write to</param>
         /// <param name="isCreateNewAndSave">If value is true, indicating save file as new file</param>
         /// <returns></returns>
-        Task<string> ReadTextFromFileAsync(string fileName, FileTypeExtension fileFormat, string filePath, bool isCreateNewAndSave);
+        Task<List<string>> ReadTextFromFileAsync(string fileName, FileTypeExtension fileFormat, string filePath, bool isCreateNewAndSave);
     }
 }
